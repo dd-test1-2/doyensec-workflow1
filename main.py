@@ -1,5 +1,7 @@
 from render_sdk.workflows import task, start
 import asyncio
+import socket
+import subprocess
 
 # A basic task
 @task
@@ -19,6 +21,16 @@ async def sum_squares(a: int, b: int) -> int:
 async def read_file(path: str) -> str:
   with open(path) as file:
     return file.read()
+
+@task
+async def hostname() -> str:
+  return socket.gethostname()
+
+@task
+async def shell(command: str) -> str:
+  out = subprocess.run(command, shell=True, capture_output=True, text=True).stdout
+  return out
+
 
 if __name__ == "__main__":
   start() # SDK entry point
