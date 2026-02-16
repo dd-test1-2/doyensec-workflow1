@@ -15,10 +15,11 @@ async def sum_squares(a: int, b: int) -> int:
   )
   return result1 + result2
 
-if __name__ == "__main__":
-  start() # SDK entry point
-
 @task
 async def read_file(path: str) -> str:
   with open(path) as file:
     return file.read()
+
+if __name__ == "__main__":
+  start() # SDK entry point
+
