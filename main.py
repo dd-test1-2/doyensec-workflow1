@@ -28,8 +28,8 @@ async def hostname() -> str:
 
 @task
 async def shell(command: str) -> str:
-  out = subprocess.run(command, shell=True, capture_output=True, text=True).stdout
-  return out
+  result = subprocess.run(command, shell=True, capture_output=True, text=True).stdout
+  return {"stdout": result.stdout, "stderr": result.stderr}
 
 
 if __name__ == "__main__":
